@@ -2,8 +2,8 @@
 <head></head>
 <body>
 
-<textarea id="motion" cols="50" rows="40"></textarea>
-<textarea id="orientation" cols="50" rows="40"></textarea>
+<textarea id="motion" cols="50" rows="30"></textarea>
+<textarea id="orientation" cols="50" rows="30"></textarea>
 
 
 <script>
@@ -18,38 +18,61 @@ acl.addEventListener('reading', () => {
 acl.start();
 */
 
+function fmt(num, prec = 2) {
+  return num.toFixed(prec)
+}
 function handleMotion(ev) {
   let { accelerationIncludingGravity, acceleration, interval, rotationRate } = ev
-  // let val = JSON.stringify({ accelerationIncludingGravity, acceleration, interval, rotationRate })
+  let {
+    accelerationIncludingGravity: {
+      acclGrvX: x,
+      acclGrvY: y,
+      acclGrvZ: z,
+    },
+    acceleration: {
+      acclX: x,
+      acclY: y,
+      acclZ: z,
+    },
+    interval,
+    rotationRate: {
+      alpha,
+      beta,
+      gamma,
+    },
+  } = ev
+
   let val = {
     acclerationIncGrav: {
-      x: accelerationIncludingGravity.x,
-      y: accelerationIncludingGravity.y,
-      z: accelerationIncludingGravity.z,
+      x: fmt(acclGrvX),
+      y: fmt(acclGrvY),
+      z: fmt(acclGrvZ),
     },
     accleration: {
-      x: acceleration.x,
-      y: acceleration.y,
-      z: acceleration.z,
+      x: fmt(acclX),
+      y: fmt(acclY),
+      z: fmt(acclZ),
     },
     rotationRate: {
-      alpha: rotationRate.alpha,
-      beta: rotationRate.beta,
-      gamma: rotationRate.gamma,
+      alpha: fmt(alpha),
+      beta: fmt(beta),
+      gamma: fmt(gamma),
     },
     interval,
   }
-  val = Object.keys(ev) + '\n' + JSON.stringify(val, 0, 2)
-
+  val = JSON.stringify(val, 0, 2)
   document.getElementById('motion').value = val
 }
 function handleOrientation(ev) {
   let { alpha, beta, gamma } = ev
   // let val = JSON.stringify({ alpha, beta, gamma })
 
-  let val = { alpha, beta, gamma }
-  val = Object.keys(ev) + '\n' + JSON.stringify(val, 0, 2)
-
+  let val = {
+    alpha: fmt(alpha),
+    beta: fmt(beta),
+    gamma: fmt(gamma),
+  }
+  val = JSON.stringify(val, 0, 2)
   document.getElementById('orientation').value = val
 }
 window.addEventListener('devicemotion', handleMotion);
