@@ -25,16 +25,16 @@ body {
 </head>
 <body>
 
+<div id="console" style=""></div>
 <div id="stage">
   <div id="paddle"></div>
 </div>
 
-<div id="console" style=""></div>
 
 <script>
+const logConsole = document.getElementById('console')
 const paddle = document.getElementById('paddle')
 const stage = document.getElementById('stage')
-const logConsole = document.getElementById('console')
 
 const paddleWidth = paddle.clientWidth
 const stageWidth = stage.clientWidth
@@ -46,7 +46,7 @@ const maxLeftAngle = 110;
 const maxRightAngle = 70;
 
 function log(dat) {
-  stage.innerHTML = dat
+  logConsole.innerHTML = dat
 }
 log(stageWidth)
 log(paddleWidth)
