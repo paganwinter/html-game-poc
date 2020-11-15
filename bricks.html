@@ -31,11 +31,6 @@ body {
   <div id="paddle"></div>
 </div>
 
-1000
-100
-50 - 950
-0 - 900
-
 <script>
 const logConsole = document.getElementById('console')
 const paddle = document.getElementById('paddle')
@@ -54,33 +49,33 @@ const maxRightAngle = 70;
 function log(dat) {
   logConsole.innerHTML = dat
 }
-log(stageWidth)
-log(paddleWidth)
+console.log(stageWidth)
+console.log(paddleWidth)
 
 const paddleStartLeft = (stageWidth/2 - paddleWidth/2)
-console.log(paddleStartLeft)
+console.log('paddleStartLeft', paddleStartLeft)
 paddle.style.left = paddleStartLeft + 'px'
-console.log(paddle.style.left)
 
 window.addEventListener('deviceorientation', (ev) => {
   let sensorAngle = ev.alpha
 
+  // make starting angle = 0 (while pointing straight)
   let angle = 90 - sensorAngle
 
+  // restrict between -20 and +20
   if (angle < -20) angle = -20
   else if ((angle > 20)) angle = 20
-  angle = angle + 20
 
-  console.log(angle)
+  // bring angle within 0 - 40 degrees
+  angle = angle + 20
 
   let paddleLeft = (angle/40 * paddleRange)
 
   let logData = sensorAngle.toFixed(2) + ' ' + angle.toFixed(2) + ' ' + paddleLeft.toFixed(2)
   log(logData)
-  console.log(logData)
+  // console.log(logData)
 
   paddle.style.left = paddleLeft + 'px'
-  console.log(paddle.style.left)
 });
 
 </script>
