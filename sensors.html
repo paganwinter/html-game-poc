@@ -1,0 +1,21 @@
+<html>
+<head></head>
+<body>
+
+<textarea id="console" cols="50" rows="40"></textarea>
+
+
+<script>
+let acl = new Accelerometer({frequency: 60});
+
+acl.addEventListener('reading', () => {
+  console.log("Acceleration along the X-axis " + acl.x);
+  console.log("Acceleration along the Y-axis " + acl.y);
+  console.log("Acceleration along the Z-axis " + acl.z);
+  document.getElementById('console').value += JSON.stringify(act)
+});
+
+acl.start();
+</script>
+</body>
+</html>
