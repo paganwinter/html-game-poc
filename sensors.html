@@ -25,14 +25,14 @@ function handleMotion(ev) {
   let { accelerationIncludingGravity, acceleration, interval, rotationRate } = ev
   let {
     accelerationIncludingGravity: {
-      acclGrvX: x,
-      acclGrvY: y,
-      acclGrvZ: z,
+      x: acclGrvX,
+      y: acclGrvY,
+      z: acclGrvZ,
     },
     acceleration: {
-      acclX: x,
-      acclY: y,
-      acclZ: z,
+      x: acclX,
+      y: acclY,
+      z: acclZ,
     },
     interval,
     rotationRate: {
