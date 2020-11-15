@@ -20,14 +20,14 @@ acl.start();
 
 function handleMotion(ev) {
   let { accelerationIncludingGravity, acceleration, interval, rotationRate } = ev
-  // let val = JSON.stringify({ accelerationIncludingGravity, acceleration, interval, rotationRate })
-  let val = JSON.stringify(ev, 0, 2)
+  let val = JSON.stringify({ accelerationIncludingGravity, acceleration, interval, rotationRate })
+  // let val = JSON.stringify(ev, 0, 2)
   document.getElementById('motion').value = val
 }
 function handleOrientation(ev) {
   let { alpha, beta, gamma } = ev
-  // let val = JSON.stringify({ alpha, beta, gamma })
-  let val = JSON.stringify(ev, 0, 2)
+  let val = JSON.stringify({ alpha, beta, gamma })
+  // let val = JSON.stringify(ev, 0, 2)
   document.getElementById('orientation').value = val
 }
 window.addEventListener('devicemotion', handleMotion);
