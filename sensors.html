@@ -1,23 +1,36 @@
 <html>
-<head></head>
+<head>
+<style>
+.garden {
+  position: relative;
+  width : 200px;
+  height: 200px;
+  border: 5px solid #CCC;
+  border-radius: 10px;
+}
+
+.ball {
+  position: absolute;
+  top   : 90px;
+  left  : 90px;
+  width : 20px;
+  height: 20px;
+  background: green;
+  border-radius: 100%;
+}
+</style>
+</head>
 <body>
+
+<div class="garden">
+  <div class="ball"></div>
+</div>
 
 <textarea id="motion" cols="50" rows="30"></textarea>
 <textarea id="orientation" cols="50" rows="30"></textarea>
 
 
 <script>
-/*
-let acl = new Accelerometer({frequency: 60});
-acl.addEventListener('reading', () => {
-  console.log("Acceleration along the X-axis " + acl.x);
-  console.log("Acceleration along the Y-axis " + acl.y);
-  console.log("Acceleration along the Z-axis " + acl.z);
-  document.getElementById('console').value += JSON.stringify(acl)
-});
-acl.start();
-*/
-
 function fmt(num, prec = 2) {
   if (num) return num.toFixed(prec)
   return num
@@ -66,7 +79,6 @@ function handleMotion(ev) {
 }
 function handleOrientation(ev) {
   let { alpha, beta, gamma } = ev
-  // let val = JSON.stringify({ alpha, beta, gamma })
 
   let val = {
     alpha: fmt(alpha),
@@ -78,6 +90,34 @@ function handleOrientation(ev) {
 }
 window.addEventListener('devicemotion', handleMotion);
 window.addEventListener('deviceorientation', handleOrientation);
+
+////////////////////////////////
+const ball   = document.querySelector('.ball');
+const garden = document.querySelector('.garden');
+const maxX = garden.clientWidth  - ball.clientWidth;
+const maxY = garden.clientHeight - ball.clientHeight;
+window.addEventListener('deviceorientation', (ev) => {
+  var x = event.beta;  // In degree in the range [-180,180]
+  var y = event.gamma; // In degree in the range [-90,90]
+
+  let pitch = ev.beta
+  let roll = ev.gamma
+
+  // Because we don't want to have the device upside down
+  // We constrain the x value to the range [-90,90]
+  if (pitch >  90) { pitch =  90};
+  if (pitch < -90) { pitch = -90};
+
+  // To make computation easier we shift the range of 
+  // x and y to [0,180]
+  pitch += 90;
+  roll += 90;
+
+  // 10 is half the size of the ball
+  // It center the positioning point to the center of the ball
+  ball.style.top  = (maxY * roll/180 - 10) + "px";
+  ball.style.left = (maxX * pitch/180 - 10) + "px";
+});
 
 </script>
 </body>
