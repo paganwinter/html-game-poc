@@ -63,8 +63,7 @@ window.addEventListener('deviceorientation', (ev) => {
   else if ((angle > 20)) angle = 20
   angle = angle + 20
 
-  let paddleLeft
-  // let paddleLeft = maxX * roll/180 - 10
+  let paddleLeft = angle/40 * stageWidth
 
   log(angle)
   log(paddleLeft)
