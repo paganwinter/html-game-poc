@@ -19,10 +19,11 @@ acl.start();
 */
 
 function fmt(num, prec = 2) {
-  return num.toFixed(prec)
+  if (num) return num.toFixed(prec)
+  return num
 }
 function handleMotion(ev) {
-  let { accelerationIncludingGravity, acceleration, interval, rotationRate } = ev
+  // let { accelerationIncludingGravity, acceleration, interval, rotationRate } = ev
   let {
     accelerationIncludingGravity: {
       x: acclGrvX,
