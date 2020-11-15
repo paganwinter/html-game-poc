@@ -57,18 +57,20 @@ paddle.style.left = paddleStartLeft + 'px'
 console.log(paddle.style.left)
 
 window.addEventListener('deviceorientation', (ev) => {
-  let angle = 90 - ev.alpha
-  console.log(angle)
+  let angle = ev.alpha
 
-  if (angle < -20) angle = -20
-  else if ((angle > 20)) angle = 20
-  angle = angle + 20
+  // angle = 90 - angle
+  // if (angle < -20) angle = -20
+  // else if ((angle > 20)) angle = 20
+  // angle = angle + 20
+
+  console.log(angle)
 
   let paddleLeft = angle/40 * stageWidth
 
-  log(angle)
-  log(paddleLeft)
-  console.log(angle, paddleLeft)
+  let logData = angle + ' ' + paddleLeft
+  log(logData)
+  console.log(logData)
 
   paddle.style.left = paddleLeft + 'px'
   console.log(paddle.style.left)
