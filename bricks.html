@@ -46,7 +46,7 @@ const maxLeftAngle = 110;
 const maxRightAngle = 70;
 
 function log(dat) {
-  stage.innerHTML += dat + '<br />'
+  stage.innerHTML = dat
 }
 log(stageWidth)
 log(paddleWidth)
@@ -58,6 +58,7 @@ console.log(paddle.style.left)
 
 window.addEventListener('deviceorientation', (ev) => {
   let angle = 90 - ev.alpha
+  console.log(angle)
 
   if (angle < -20) angle = -20
   else if ((angle > 20)) angle = 20
@@ -67,8 +68,10 @@ window.addEventListener('deviceorientation', (ev) => {
 
   log(angle)
   log(paddleLeft)
+  console.log(angle, paddleLeft)
 
   paddle.style.left = paddleLeft + 'px'
+  console.log(paddle.style.left)
 });
 
 </script>
