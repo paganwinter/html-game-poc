@@ -40,6 +40,7 @@ body {
 <body>
 
 <div id="console" style=""></div>
+<div>high score: <span id="high-score" style="">0</span></div>
 <div id="score" style="">0</div>
 <div id="stage">
   <div id="paddle"></div>
@@ -47,9 +48,11 @@ body {
 
 <script>
 let score = 0
+let highScore = 0
 
 const logConsole = document.getElementById('console')
 const $score = document.getElementById('score')
+const $highScore = document.getElementById('high-score')
 const paddle = document.getElementById('paddle')
 const stage = document.getElementById('stage')
 
@@ -127,10 +130,14 @@ async function dropBall() {
     const paddleLeft = parseInt(paddle.style.left)
     if (paddleLeft >= (ballLeft - paddleWidth) && paddleLeft <= (ballLeft)) {
       score++
+      if (highScore < score) {
+        highScore = score
+      }
     } else {
       score = 0
     }
     $score.innerHTML = score
+    $highScore.innerHTML = highScore
 
     ball.remove()
     dropBall()
