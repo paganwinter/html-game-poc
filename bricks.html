@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
 }
-#container {
+#stage {
   position: relative;
   width : 100%;
   height: 95%;
@@ -22,22 +22,33 @@ body {
   background: #024;
   border-radius: 3px;
 }
+
+.ball {
+  border-radius: 100%;
+  background: #444;
+  position: absolute;
+}
 </style>
 </head>
 <body>
 
 <div id="console" style=""></div>
+<div id="score" style="">0</div>
 <div id="stage">
   <div id="paddle"></div>
 </div>
 
 <script>
+let score = 0
+
 const logConsole = document.getElementById('console')
+const $score = document.getElementById('score')
 const paddle = document.getElementById('paddle')
 const stage = document.getElementById('stage')
 
 const paddleWidth = paddle.clientWidth
 const stageWidth = stage.clientWidth
+const stageHeight = stage.clientHeight
 const paddleRange = stageWidth - paddleWidth
 
 // const maxLeft = garden.clientWidth  - ball.clientWidth;
@@ -57,7 +68,7 @@ console.log('paddleStartLeft', paddleStartLeft)
 paddle.style.left = paddleStartLeft + 'px'
 
 window.addEventListener('deviceorientation', (ev) => {
-  let sensorAngle = ev.alpha
+  let sensorAngle = ev.alpha || 0
 
   // make starting angle = 0 (while pointing straight)
   let angle = 90 - sensorAngle
@@ -77,6 +88,68 @@ window.addEventListener('deviceorientation', (ev) => {
 
   paddle.style.left = paddleLeft + 'px'
 });
+
+async function dropBall() {
+  const ballSize = 15
+  const ballLeft = Math.random() * (stageWidth - ballSize)
+
+  let ball = document.createElement('div')
+  ball.className = 'ball'
+  ball.style.left = ballLeft + 'px'
+  ball.style.width = ball.style.height = ballSize + 'px'
+
+  stage.appendChild(ball)
+  console.log(stage.clientWidth, stage.clientHeight)
+
+  // ball.addEventListener('animationend', () => {
+  //   console.log('Animation ended');
+  // });
+  let ballAnimation = ball.animate(
+    {
+      top: ['0px', `${stageHeight}px`]
+    },
+    {
+      duration: 1760, // number in ms [this would be equiv of your speed].
+      // easing: 'ease-in',
+      iterations: 1,
+    }
+  );
+  ballAnimation.finished.then(() => {
+    // check if ball is within paddle
+    console.log(paddle.style.left)
+    const paddleLeft = parseInt(paddle.style.left)
+    if (paddleLeft >= (ballLeft - paddleWidth) && paddleLeft <= (ballLeft)) {
+      console.log('yay')
+      score++
+    } else {
+      console.log('no')
+      score--
+    }
+    $score.innerHTML = score
+
+    ball.remove()
+    dropBall()
+  })
+
+  // function move(el) {
+  //   let top = 0
+  //   function frame() {
+  //     top++
+  //     el.style.top = top + 'px'
+  //     if (top >= stageHeight) {
+  //       clearInterval(id)
+  //       console.log(el)
+  //     }
+  //   }
+  //   let id = setInterval(frame, 10) // draw every 10ms
+  // }
+  // move(ball)
+}
+
+window.onload = async function () {
+  console.log('hi')
+  dropBall()
+}
 
 </script>
 </body>
