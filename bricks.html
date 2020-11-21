@@ -128,7 +128,7 @@ async function dropBall() {
     if (paddleLeft >= (ballLeft - paddleWidth) && paddleLeft <= (ballLeft)) {
       score++
     } else {
-      score--
+      score = 0
     }
     $score.innerHTML = score
 
