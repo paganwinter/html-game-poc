@@ -90,7 +90,7 @@ window.addEventListener('deviceorientation', (ev) => {
   let paddleLeft = (angle/40 * paddleRange)
 
   let logData = sensorAngle.toFixed(2) + ' ' + angle.toFixed(2) + ' ' + paddleLeft.toFixed(2)
-  log(logData)
+  // log(logData)
   // console.log(logData)
 
   paddle.style.left = paddleLeft + 'px'
