@@ -6,6 +6,7 @@
 body {
   padding: 0;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 #stage {
   position: relative;
@@ -17,12 +18,18 @@ body {
   position: absolute;
   bottom: 0px;
   left: 0px;
-  width: 100px;
+  width: 50px;
   height: 10px;
   background: #024;
   border-radius: 3px;
 }
-
+#score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: #ddd;
+}
 .ball {
   border-radius: 100%;
   background: #444;
@@ -119,10 +126,8 @@ async function dropBall() {
     console.log(paddle.style.left)
     const paddleLeft = parseInt(paddle.style.left)
     if (paddleLeft >= (ballLeft - paddleWidth) && paddleLeft <= (ballLeft)) {
-      console.log('yay')
       score++
     } else {
-      console.log('no')
       score--
     }
     $score.innerHTML = score
@@ -147,7 +152,6 @@ async function dropBall() {
 }
 
 window.onload = async function () {
-  console.log('hi')
   dropBall()
 }
 
