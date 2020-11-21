@@ -77,7 +77,8 @@ const paddleStartLeft = (stageWidth/2 - paddleWidth/2)
 console.log('paddleStartLeft', paddleStartLeft)
 paddle.style.left = paddleStartLeft + 'px'
 
-window.addEventListener('deviceorientation', (ev) => {
+
+function paddleMoved(ev) {
   let sensorAngle = ev.alpha || 0
 
   // make starting angle = 0 (while pointing straight)
@@ -97,7 +98,7 @@ window.addEventListener('deviceorientation', (ev) => {
   // console.log(logData)
 
   paddle.style.left = paddleLeft + 'px'
-});
+}
 
 async function dropBall() {
   const ballSize = 15
@@ -109,7 +110,6 @@ async function dropBall() {
   ball.style.width = ball.style.height = ballSize + 'px'
 
   stage.appendChild(ball)
-  console.log(stage.clientWidth, stage.clientHeight)
 
   // ball.addEventListener('animationend', () => {
   //   console.log('Animation ended');
@@ -126,7 +126,7 @@ async function dropBall() {
   );
   ballAnimation.finished.then(() => {
     // check if ball is within paddle
-    console.log(paddle.style.left)
+    // console.log(paddle.style.left)
     const paddleLeft = parseInt(paddle.style.left)
     if (paddleLeft >= (ballLeft - paddleWidth) && paddleLeft <= (ballLeft)) {
       score++
@@ -159,6 +159,22 @@ async function dropBall() {
 }
 
 window.onload = async function () {
+  if (DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
+    DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if (response == 'granted') {
+          window.addEventListener('deviceorientation', (ev) => {
+            paddleMoved(ev)
+          })
+        }
+      })
+      .catch(console.error)
+  } else {
+    window.addEventListener('deviceorientation', (ev) => {
+      paddleMoved(ev)
+    });
+  }
+
   dropBall()
 }
 
